@@ -23,10 +23,10 @@ Function New-EdgeStaticRouteRul (
 	$wc = New-Object System.Net.WebClient
 	$wc.Headers.Add("x-vcloud-authorization", $Edgeview.Client.SessionKey)
 	$wc.Headers.Add("Content-Type", "application/vnd.vmware.admin.edgeGatewayServiceConfiguration+xml")
-	$wc.Headers.Add("Accept", "application/*+xml;version=34.0")
+	$wc.Headers.Add("Accept", "application/*+xml;version=36.1")
 	$webclient = New-Object system.net.webclient
     $webclient.Headers.Add("x-vcloud-authorization",$Edgeview.Client.SessionKey)
-    $webclient.Headers.Add("accept",$EdgeView.Type + ";version=34.0")
+    $webclient.Headers.Add("accept",$EdgeView.Type + ";version=36.1")
     [xml]$EGWConfXML = $webclient.DownloadString($EdgeView.href)
 	[xml]$OriginalXML = $EGWConfXML.EdgeGateway.Configuration.EdgegatewayServiceConfiguration.StaticRoutingService.outerxml
 	$strXML = '<StaticRoute>
@@ -45,7 +45,7 @@ Function New-EdgeStaticRouteRul (
 	$headers = @{
 		"Content-Type" = "application/vnd.vmware.admin.edgeGatewayServiceConfiguration+xml"
 		"x-vcloud-authorization" = $Edgeview.Client.SessionKey
-		"Accept" = "application/*+xml;version=34.0"
+		"Accept" = "application/*+xml;version=36.1"
 	}
 	$request = Invoke-RestMethod -Method POST  -Uri $URI -SkipCertificateCheck  -Headers $headers -Body $GoXML -SkipHttpErrorCheck
 	if($request.Error.message) {$request.Error.message}
@@ -59,7 +59,7 @@ Function Get-EdgeStaticRouteRule ($EdgeGateway)  {
 	}
     $webclient = New-Object system.net.webclient
     $webclient.Headers.Add("x-vcloud-authorization",$Edgeview.Client.SessionKey)
-    $webclient.Headers.Add("accept",$EdgeView.Type + ";version=34.0")
+    $webclient.Headers.Add("accept",$EdgeView.Type + ";version=36.1")
     [xml]$EGWConfXML = $webclient.DownloadString($EdgeView.href)
     $StaticRouteRules = $EGWConfXML.EdgeGateway.Configuration.EdgegatewayServiceConfiguration.StaticRoutingService.StaticRoute
     $Rules = @()
@@ -86,7 +86,7 @@ Function Get-EdgeInterface ($EdgeGateway)  {
 	}
     $webclient = New-Object system.net.webclient
     $webclient.Headers.Add("x-vcloud-authorization",$Edgeview.Client.SessionKey)
-    $webclient.Headers.Add("accept",$EdgeView.Type + ";version=34.0")
+    $webclient.Headers.Add("accept",$EdgeView.Type + ";version=36.1")
     [xml]$EGWConfXML = $webclient.DownloadString($EdgeView.href)
     $EdgeInterfaces  = $EGWConfXML.EdgeGateway.Configuration.GatewayInterfaces.GatewayInterface
     $Rules = @()
